@@ -1,0 +1,14 @@
+{
+  "title": "MySQL Admin for Firefox",
+  "name": "firefox-mysqladmin",
+  "version": "0.0.1",
+  "description": "MySQL admin interface for Firefox",
+  "main": "index.js",
+  "author": "",
+  "engines": {
+    "firefox": ">=38.0a1",
+    "fennec": ">=38.0a1"
+  },
+  "license": "MIT",
+  "unpack": true	  
+}

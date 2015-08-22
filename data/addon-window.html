@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>MySQL Admin for Firefox!</title>
+<style type="text/css">
+#query-box {
+	margin: 20px 0;
+	background-color: whitesmoke;	
+	padding: 10px 0;
+}
+#query-box > * {
+	display: block;
+}
+#select-query-box {
+	float: left;
+}		
+#select-query-results {
+	float: left;
+	font-family: courier;
+	margin: 0 0 0 20px;	
+	max-width: 400px;	
+	white-space: pre-wrap;
+	word-wrap: break-word;
+}		
+</style>
+</head>
+<body>
+	<h1>MySQL Admin for Firefox</h1>
+	<div id="content">
+		<div id="connect-box">
+			<label for="connect-string-box">Connection String</label>
+			<input type="text" id="connect-string-box"/>
+			<button id="connect-button">Connect</button>
+			<button id="disconnect-button">Disconnect</button>
+		</div>
+		<div id="query-box">
+			<button id="select-query-button">Run SELECT query</button>
+			<textarea id="select-query-box" rows=20 cols=50></textarea>
+			<pre id="select-query-results"></pre>
+			<div style="clear: both;"></div>
+		</div>
+	</div>
+<script type="text/javascript" src="zepto/zepto.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#connect-button").click(function() {
+		window.postMessage({action: "connect", connectionString: $("#connect-string-box").val()}, "*");
+	});
+	$("#disconnect-button").click(function() {
+		window.postMessage({action: "disconnect"}, "*");
+	});
+	$("#select-query-button").click(function() {
+		window.postMessage({action: "select-query", query: $("#select-query-box").val()}, "*");
+	});
+
+	window.addEventListener("message", function(evt) {
+		switch(evt.data.action) {
+			case "select-query-results":
+				$("#select-query-results").text(evt.data.data);
+				break;
+			default:
+				break;	
+		}
+	});
+});
+</script>
+</body>
+</html>
